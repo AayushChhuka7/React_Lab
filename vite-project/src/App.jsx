@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useRef } from "react";
 
 export default function App() {
-  const [width, setWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    function handleResize() {
-      setWidth(window.innerWidth);
-    }
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const [username, setuserName] = useState("");
+  const inputRef = useRef(null);
   return (
     <div>
-      <h3>width:{width}</h3>
+      <input
+        ref={inputRef}
+        type="text"
+        value={username}
+        onChange={(e) => setuserName(e.target.value)}
+      />
+      <button onClick={() => inputRef.current.focus()}>Focus Input</button>
+      <p>Typed name : {username}</p>
     </div>
   );
 }
