@@ -1,23 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function App() {
-  const [count, setCount] = useState(0);
-  const [isloggedIn, setIsLoggedIn] = useState(false);
-  function handleIncrement() {
-    setCount((oldcount) => oldcount + 1);
-    setCount((oldcount) => oldcount + 1);
-    setCount((oldcount) => oldcount + 1);
-  }
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    function handleResize() {
+      setWidth(window.innerWidth);
+    }
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <div>
-      <h3>{count}</h3>
-      <button onClick={handleIncrement}>Increment</button>
-      {isloggedIn && <h3>Welcome</h3>}
-      {isloggedIn && <h3>Please Login in</h3>}
-
-      <button onClick={() => setIsLoggedIn(!isloggedIn)}>
-        {isloggedIn ? "LogOut" : "Login"}
-      </button>
+      <h3>width:{width}</h3>
     </div>
   );
 }
